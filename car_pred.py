@@ -3,8 +3,13 @@ import pandas as pd
 import pickle
 
 # load the model from disk.
-with open('car_pred_model', 'rb') as f:
-    model = pickle.load(f)
+try:
+    with open('car_pred_model.pkl', 'rb') as f:
+        model = pickle.load(f)
+except FileNotFoundError:
+    print("The model file was not found.")
+except pickle.UnpicklingError:
+    print("Error unpickling the model file. It might be corrupted or incompatible.")
 
 cars_df = pd.read_csv("./cars24-car-price.csv")
 
